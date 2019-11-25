@@ -5,7 +5,7 @@ using UnityEngine;
 public class Station : MonoBehaviour
 {
     private string id;
-    private string name;
+    private string stationName;
     private string parentId;
     private Vector2 pos;
     private int line;
