@@ -17,4 +17,8 @@ public class Station : MonoBehaviour
         
     }
 
+    public string GetId()
+    {
+        return this.id;
+    }
 }
