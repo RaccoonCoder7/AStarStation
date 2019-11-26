@@ -28,6 +28,33 @@ public class CameraMove : MonoBehaviour
         prevMousePos = Input.mousePosition;
     }
 
+    public Vector3 ChangeToMaxPos(Vector3 originPos)
+    {
+        if (Mathf.Abs(originPos.x) > maxX)
+        {
+            if (originPos.x < 0)
+            {
+                originPos.x = -maxX;
+            }
+            else
+            {
+                originPos.x = maxX;
+            }
+        }
+        if (Mathf.Abs(originPos.y) > maxY)
+        {
+            if (originPos.y < 0)
+            {
+                originPos.y = -maxY;
+            }
+            else
+            {
+                originPos.y = maxY;
+            }
+        }
+        return originPos;
+    }
+
     private Vector3 CheckMaxPos(Vector3 move)
     {
         Vector3 pos = transform.position;
