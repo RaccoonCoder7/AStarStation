@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ConnStation : MonoBehaviour
 {
-    private string id;
-    private int line;
+    private string stationName;
     private int dist;
 
     void Start()
@@ -13,4 +12,23 @@ public class ConnStation : MonoBehaviour
         
     }
 
+    public void SetStationName(string stationName)
+    {
+        this.stationName = stationName;
+    }
+
+    public string GetStationName()
+    {
+        return this.stationName;
+    }
+
+    public void SetDist(int dist)
+    {
+        this.dist = dist;
+    }
+
+    public int GetDist()
+    {
+        return this.dist;
+    }
 }

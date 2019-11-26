@@ -1,0 +1,4 @@
+id,stationName,stationPosX,stationPosY,lines,connectedStations,changeLineDistenceInfos
+133,서울역,197155.4142,450581.8317,1&4&5,시청/아무역,4to6-159/5to1-160
+132,시청,197570.0065,451570.3932,1,서울역,2to5-101
+131,아무역,77777.0065,77777.3932,2,시청/서울역,
