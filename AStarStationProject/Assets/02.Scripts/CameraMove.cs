@@ -4,14 +4,29 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    private Vector3 prevMousePos;
+
     public float dragSpeed = -500.0f;
     public float maxX = 5.92f;
     public float maxY = 3.73f;
 
+    private Vector3 prevMousePos;
+    private Camera cam;
+
+    void Start()
+    {
+        cam = Camera.main;
+    }
 
     void Update()
     {
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f && cam.orthographicSize < 8f)
+        {
+            cam.orthographicSize += 0.5f;
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f && cam.orthographicSize > 2f)
+        {
+            cam.orthographicSize -= 0.5f;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             prevMousePos = Input.mousePosition;
@@ -58,31 +73,42 @@ public class CameraMove : MonoBehaviour
     private Vector3 CheckMaxPos(Vector3 move)
     {
         Vector3 pos = transform.position;
-        if (move.x > 0 && transform.position.x + move.x > maxX)
+        float calMaxX = GetCalculatedMaxX();
+        float calMaxY = GetCalculatedMaxY();
+        if (move.x > 0 && transform.position.x + move.x > calMaxX)
         {
-            pos.x = maxX;
+            pos.x = calMaxX;
             transform.position = pos;
             move.x = 0;
         }
-        else if (move.x < 0 && transform.position.x + move.x < -maxX)
+        else if (move.x < 0 && transform.position.x + move.x < -calMaxX)
         {
-            pos.x = -maxX;
+            pos.x = -calMaxX;
             transform.position = pos;
             move.x = 0;
         }
-        if (move.y > 0 && transform.position.y + move.y > maxY)
+        if (move.y > 0 && transform.position.y + move.y > calMaxY)
         {
-            pos.y = maxY;
+            pos.y = calMaxY;
             transform.position = pos;
             move.y = 0;
         }
-        else if (move.y < 0 && transform.position.y + move.y < -maxY)
+        else if (move.y < 0 && transform.position.y + move.y < -calMaxY)
         {
-            pos.y = -maxY;
+            pos.y = -calMaxY;
             transform.position = pos;
             move.y = 0;
         }
         return move;
     }
 
+    private float GetCalculatedMaxX()
+    {
+        return 5 / cam.orthographicSize * maxX;
+    }
+
+    private float GetCalculatedMaxY()
+    {
+        return 5 / cam.orthographicSize * maxY;
+    }
 }
