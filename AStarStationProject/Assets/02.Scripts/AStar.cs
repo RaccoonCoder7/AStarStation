@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class AStar : MonoBehaviour
 {
-    public List<Station> routeList;
+    public List<Station> routeList = new List<Station>();
     public GameObject ring;
 
+    private List<GameObject> rings = new List<GameObject>();
     private int nowLine;
-    private string destinationID;
     private int G;
     private int F;
     private int H;
-    private List<Station> openedList;
-    private List<Station> closedList;
+    private List<Station> openedList = new List<Station>();
+    private List<Station> closedList = new List<Station>();
     private Station nowStation;
+    private Station destination;
     private CameraMove camMove;
 
     void Start()
@@ -23,12 +24,27 @@ public class AStar : MonoBehaviour
         StartCoroutine("RouteAnim");
     }
 
+    public void DestroyRings()
+    {
+        foreach (GameObject r in rings)
+        {
+            Destroy(r);
+        }
+        rings = new List<GameObject>();
+    }
+
+    public IEnumerator SearchPath(Station start, Station end)
+    {
+        yield return null;
+    }
+
     private IEnumerator RouteAnim()
     {
         foreach (Station item in routeList)
         {
             Vector3 pos = item.transform.position;
-            Instantiate(ring, pos, Quaternion.identity);
+            GameObject clone = Instantiate(ring, pos, Quaternion.identity);
+            rings.Add(clone);
             pos.z = -10;
             pos = camMove.ChangeToMaxPos(pos);
             camMove.transform.position = pos;
