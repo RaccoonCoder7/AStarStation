@@ -7,12 +7,15 @@ public class TouchMgr : MonoBehaviour
     public GameObject startImg;
     public GameObject endImg;
 
+    private RaycastHit2D hit;
+    private int stationLayer;
     private Station nowStation;
     private Station destination;
     private AStar aStar;
 
     void Start()
     {
+        stationLayer = LayerMask.NameToLayer("Station");
         aStar = FindObjectOfType<AStar>();
         startImg = Instantiate(startImg);
         startImg.SetActive(false);
@@ -22,7 +25,15 @@ public class TouchMgr : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonUp(0))
+        {
+            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.collider.name);
+            }
+        }
     }
 
     private void TouchStation()
