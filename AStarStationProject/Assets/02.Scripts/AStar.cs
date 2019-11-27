@@ -7,7 +7,7 @@ public class AStar : MonoBehaviour
     public List<Station> routeList = new List<Station>();
     public GameObject ring;
 
-    private List<GameObject> rings = new List<GameObject>();
+    private GameObject rings;
     private int nowLine;
     private int G;
     private int F;
@@ -21,20 +21,20 @@ public class AStar : MonoBehaviour
     void Start()
     {
         camMove = Camera.main.GetComponent<CameraMove>();
-        StartCoroutine("RouteAnim");
+        rings = new GameObject("rings");
     }
 
     public void DestroyRings()
     {
-        foreach (GameObject r in rings)
-        {
-            Destroy(r);
-        }
-        rings = new List<GameObject>();
+        Destroy(rings);
+        rings = new GameObject("rings");
     }
 
     public IEnumerator SearchPath(Station start, Station end)
     {
+        // TODO: 계산중임을 표시할 무언가
+        // TODO: 알고리즘 구현
+        // TODO: RouteAnim 실행하기
         yield return null;
     }
 
@@ -43,8 +43,7 @@ public class AStar : MonoBehaviour
         foreach (Station item in routeList)
         {
             Vector3 pos = item.transform.position;
-            GameObject clone = Instantiate(ring, pos, Quaternion.identity);
-            rings.Add(clone);
+            Instantiate(ring, pos, Quaternion.identity, rings.transform);
             pos.z = -10;
             pos = camMove.ChangeToMaxPos(pos);
             camMove.transform.position = pos;
