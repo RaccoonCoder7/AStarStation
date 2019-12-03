@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class StationData : MonoBehaviour
 {
-    public List<Station> stations = new List<Station>();
+    public List<Station> stations;
     
     // station search
     public Station GetStation(string stationName)
     {
-        return stations.Find(item => item.GetId().Equals(stationName));
+        return stations.Find(item => item.GetStationName().Equals(stationName));
     }
 }

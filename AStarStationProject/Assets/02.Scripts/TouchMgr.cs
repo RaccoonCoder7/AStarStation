@@ -13,6 +13,8 @@ public class TouchMgr : MonoBehaviour
     private Station destination;
     private AStar aStar;
 
+    public StationData stationData;
+
     void Start()
     {
         stationLayer = LayerMask.NameToLayer("Station");
@@ -31,7 +33,15 @@ public class TouchMgr : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
+                // 디버그용 
+                Station station = stationData.GetStation(hit.collider.name);
+                Debug.Log(station.GetStationName() + " pos: " + station.GetPos());
+                //foreach(KeyValuePair<string, int> i in station.GetTransferDic())
+                //{
+                //    Debug.Log(i.Key + " : " + i.Value);
+                //}
+                // 디버그용 
             }
         }
     }

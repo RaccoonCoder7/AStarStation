@@ -191,6 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 281933554}
   - component: {fileID: 281933553}
+  - component: {fileID: 281933555}
   m_Layer: 0
   m_Name: Seoul_Metro_Map
   m_TagString: Untagged
@@ -260,6 +261,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &281933555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281933552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb77a72ea0c604749a45b5b4ed285bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchMgr: {fileID: 421570583}
 --- !u!1 &421570582
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 421570584}
   - component: {fileID: 421570583}
+  - component: {fileID: 421570585}
   m_Layer: 0
   m_Name: TouchMgr
   m_TagString: Untagged
@@ -292,6 +307,7 @@ MonoBehaviour:
   startImg: {fileID: 6230213061644767155, guid: 6f4bd2ff01fd12444a632899c7e64370,
     type: 3}
   endImg: {fileID: 7641161084118676857, guid: f3586a44f7242004cbfa2d3d026599bb, type: 3}
+  stationData: {fileID: 421570585}
 --- !u!4 &421570584
 Transform:
   m_ObjectHideFlags: 0
@@ -306,6 +322,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &421570585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421570582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a01a33638285de428a85614d6dbdec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stations: []
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
