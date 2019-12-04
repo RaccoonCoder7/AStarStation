@@ -60,7 +60,7 @@ public class TouchMgr : MonoBehaviour
             endImg.SetActive(true);
             endImg.transform.position = Vector3.zero; // TODO: station 포지션으로
             destination = new Station(); // TODO: station으로
-            aStar.StartCoroutine(aStar.SearchPath(nowStation, destination));
+            aStar.StartCoroutine(aStar.SearchPath("nowStation", "destination"));
             return;
         }
         TouchOther();

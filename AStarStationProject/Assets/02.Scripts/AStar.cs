@@ -32,21 +32,42 @@ public class AStar : MonoBehaviour
         rings = new GameObject("rings");
     }
 
-    public IEnumerator SearchPath(Station start, Station end)
+    public IEnumerator SearchPath(string start, string end)
     {
         // TODO: 계산중임을 표시할 무언가
 
-        nowStation = start;
-        destination = end;
-        while(true){
-            // stationData
-            // SetStationLists();
-            break;
-        }
-        
+        nowStation = stationData.GetStation(start);
+        destination = stationData.GetStation(end);
+        openedList.Add(nowStation);
+        LoopSearch();
+        List<Station> finalList = GetFinalRouteList();
+        // TODO: station리스트를 transform리스트로 변환해야함
+        // yeild return RouteAnim() coroutine
 
         // TODO: RouteAnim 실행하기
         yield return null;
+    }
+
+    private void LoopSearch()
+    {
+        float endTime = Time.time + 10;
+        while (endTime < Time.time)
+        {
+            foreach (ConnStation cs in nowStation.GetConnStationList())
+            {
+                Station st = stationData.GetStation(cs.GetStationName());
+                SetStationLists(st);
+                if (st.GetStationName().Equals(destination.GetStationName()))
+                {
+                    return;
+                }
+            }
+            if (openedList.Count == 0)
+            {
+                return;
+            }
+            nowStation = openedList[GetNearestStation()];
+        }
     }
 
     private void SetStationLists(Station st)
