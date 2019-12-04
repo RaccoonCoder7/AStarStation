@@ -66,7 +66,7 @@ public class StationDataReader : MonoBehaviour
                     string[] splitChageDistenceDetail = splitChageDistence.Split('-');
                     connStation = new ConnStation();
 
-                    station.AddTransferDic(splitChageDistenceDetail[0], int.Parse(splitChageDistenceDetail[1].ToString()));
+                    station.AddTransferDic(splitChageDistenceDetail[0], int.Parse(splitChageDistenceDetail[1].ToString()) * 18);
 
                 }
             }

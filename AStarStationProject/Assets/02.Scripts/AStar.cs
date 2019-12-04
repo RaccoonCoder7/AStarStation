@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AStar : MonoBehaviour
@@ -30,6 +31,26 @@ public class AStar : MonoBehaviour
     {
         Destroy(rings);
         rings = new GameObject("rings");
+    }
+
+    private void FGHCalculation(Station st)
+    {
+        ConnStation connSt = nowStation.GetConnStationList().Find(item => item.GetStationName().Equals(st.GetStationName()));
+        G = nowStation.GetG() + connSt.GetDist();
+
+        if (st.GetLines().Find(item => item.Equals(nowLine)).Equals(null))
+        {
+            int equalLine = Enumerable.Intersect(nowStation.GetLines(), st.GetLines()).First();
+            string numToNum = equalLine > nowLine ? nowLine + "to" + equalLine : equalLine + "to" + nowLine;
+            G += nowStation.GetTransferDic()[numToNum];
+        }
+
+        H = Vector2.Distance(st.GetPos(), destination.GetPos());
+        F = G + H;
+        st.SetG(G);
+        st.SetG(H);
+        st.SetG(F);
+        st.SetParentName(nowStation.GetStationName());
     }
 
     public IEnumerator SearchPath(string start, string end)
@@ -66,7 +87,7 @@ public class AStar : MonoBehaviour
             {
                 return;
             }
-            nowStation = openedList[GetNearestStation()];
+            nowStation = GetNearestStation();
         }
     }
 
@@ -106,13 +127,14 @@ public class AStar : MonoBehaviour
 
     private void AddNowStationToOpenList(Station st)
     {
-
+        FGHCalculation(st);
+        openedList.Add(st);
     }
 
-    private int GetNearestStation()
+    private Station GetNearestStation()
     {
-        int index = 0;
-        return index;
+        float highestF = (from openData in openedList select openData.GetF()).Min();
+        return openedList.Find(item => item.GetF().Equals(highestF));
     }
 
     private List<Station> GetFinalRouteList()
