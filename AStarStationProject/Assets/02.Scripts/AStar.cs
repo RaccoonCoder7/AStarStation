@@ -17,11 +17,13 @@ public class AStar : MonoBehaviour
     private Station nowStation;
     private Station destination;
     private CameraMove camMove;
+    private StationData stationData;
 
     void Start()
     {
         camMove = Camera.main.GetComponent<CameraMove>();
         rings = new GameObject("rings");
+        stationData = FindObjectOfType<StationData>();
     }
 
     public void DestroyRings()
@@ -33,32 +35,43 @@ public class AStar : MonoBehaviour
     public IEnumerator SearchPath(Station start, Station end)
     {
         // TODO: 계산중임을 표시할 무언가
-        // TODO: 알고리즘 구현
+
+        nowStation = start;
+        destination = end;
+        while(true){
+            // stationData
+            // SetStationLists();
+            break;
+        }
+        
+
         // TODO: RouteAnim 실행하기
         yield return null;
     }
 
-    private void SetStationLists()
+    private void SetStationLists(Station st)
     {
 
     }
 
-    private void CheckRouteImproveRequired()
+    private void CheckRouteImproveRequired(Station st)
     {
 
     }
 
-    private void AddNowStationToOpenList()
+    private void AddNowStationToOpenList(Station st)
     {
 
     }
 
-    private int GetNearestStation(){
+    private int GetNearestStation()
+    {
         int index = 0;
         return index;
     }
 
-    private List<Station> GetFinalRouteList(){
+    private List<Station> GetFinalRouteList()
+    {
         return null;
     }
 
