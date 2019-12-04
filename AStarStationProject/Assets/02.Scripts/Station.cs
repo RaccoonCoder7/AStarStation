@@ -11,10 +11,38 @@ public class Station : MonoBehaviour
     private List<int> lines = new List<int>();
     private List<ConnStation> connStationList = new List<ConnStation>();
     private Dictionary<string, int> transferDic = new Dictionary<string, int>();
+    private float f;
+    private float g;
+    private float h;
 
-    void Start()
+    public void SetG(float g)
     {
-        
+        this.g = g;
+    }
+
+    public float GetG()
+    {
+        return this.g;
+    }
+
+    public void SetH(float h)
+    {
+        this.h = h;
+    }
+
+    public float GetH()
+    {
+        return this.h;
+    }
+
+    public void SetF(float f)
+    {
+        this.f = f;
+    }
+
+    public float GetF()
+    {
+        return this.f;
     }
 
     public void SetStationName(string stationName)
