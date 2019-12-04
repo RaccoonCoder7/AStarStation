@@ -70,12 +70,30 @@ public class AStar : MonoBehaviour
         }
     }
 
-    private void SetStationLists(Station st)
+    private void SetStationLists(Station st) // 탐색시작시 호출하는 메소드
     {
-
+        // 현재역을 클로즈리스트에 넣음
+        // 클로즈리스트에 전에 오픈리스트에서 제거
+        openedList.Remove(nowStation);
+        closedList.Add(nowStation);
+        
+        foreach (ConnStation connStation in nowStation.GetConnStationList())
+        {
+            // 현재역의 인접역이 닫힌목록에 있으면 True 없으면 False
+            bool nowStationInClosedList = (closedList.Find(item => item.GetStationName().Equals(connStation.GetStationName())) != null);
+            // 현재역의 인접역이 열린목록에 있으면 True 없으면 False
+            bool nowStationInOpenedList = (openedList.Find(item => item.GetStationName().Equals(connStation.GetStationName())) != null);
+            
+            // 
+            if (nowStationInClosedList) continue;
+            // 열린목록에 있으면 경로개선메소드 호출
+            else if (nowStationInOpenedList) CheckRouteImproveRequired(nowStation);
+            // 열린목록에 없으면 열린목록에 추가하는 메소드 호출
+            else AddNowStationToOpenList(nowStation);
+        }
     }
 
-    private void CheckRouteImproveRequired(Station st)
+    private void CheckRouteImproveRequired(Station st) // 경로개선 메소드
     {
 
     }
