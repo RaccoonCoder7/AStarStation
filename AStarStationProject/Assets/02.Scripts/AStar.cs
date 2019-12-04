@@ -165,7 +165,24 @@ public class AStar : MonoBehaviour
 
     private List<Station> GetFinalRouteList()
     {
-        return null;
+        List<Station> finalList = new List<Station>();
+        Station nextStation = closedList[closedList.Count -1];
+        while (!closedList[0].GetStationName().Equals(nextStation.GetStationName()))
+        {
+            if (nextStation.GetStationName().Equals(destination.GetStationName()))
+            {
+                finalList.Add(destination);
+            }
+            else
+            {
+                finalList.Add(closedList.Find(item => item.GetStationName().Equals(nextStation.GetParentName())));
+            }
+            nextStation = finalList[finalList.Count - 1];
+        }
+
+        finalList.Add(nextStation);
+
+        return finalList;
     }
 
     private IEnumerator RouteAnim()
