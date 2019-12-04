@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AStar : MonoBehaviour
 {
-    public List<Station> routeList = new List<Station>();
+    public List<Transform> routeList = new List<Transform>();
     public GameObject ring;
 
     private GameObject rings;
@@ -40,9 +40,9 @@ public class AStar : MonoBehaviour
 
     private IEnumerator RouteAnim()
     {
-        foreach (Station item in routeList)
+        foreach (Transform item in routeList)
         {
-            Vector3 pos = item.transform.position;
+            Vector3 pos = item.position;
             Instantiate(ring, pos, Quaternion.identity, rings.transform);
             pos.z = -10;
             pos = camMove.ChangeToMaxPos(pos);

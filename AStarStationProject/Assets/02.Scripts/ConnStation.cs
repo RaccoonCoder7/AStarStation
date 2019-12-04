@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnStation : MonoBehaviour
+public class ConnStation
 {
     private string stationName;
     private int dist;

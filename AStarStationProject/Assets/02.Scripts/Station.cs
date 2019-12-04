@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Station : MonoBehaviour
+public class Station
 {
     private string id;
     private string stationName;
