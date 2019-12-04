@@ -96,8 +96,9 @@ public class AStar : MonoBehaviour
     private void CheckRouteImproveRequired(Station st) // 경로개선 메소드
     {
         float originalG = openedList.Find(item => item.GetStationName().Equals(st.GetStationName())).GetG();
-        float newG = st.GetG();
-        if(originalG > newG) {
+        float nowG = st.GetG();
+        // 기존 오픈리스트에 있던 station G값보다 현재 station G값이 작으면 기존 station 삭제, 현재 station 추가
+        if(originalG > nowG) {
             openedList.Remove(stationData.GetStation(st.GetStationName()));
             openedList.Add(st);
         }
