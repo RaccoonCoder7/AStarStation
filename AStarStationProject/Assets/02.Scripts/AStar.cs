@@ -114,10 +114,10 @@ public class AStar : MonoBehaviour
     {
         // 현재역을 클로즈리스트에 넣음
         // 클로즈리스트에 전에 오픈리스트에서 제거
-        openedList.Remove(nowStation);
-        closedList.Add(nowStation);
+        openedList.Remove(st);
+        closedList.Add(st);
         
-        foreach (ConnStation connStation in nowStation.GetConnStationList())
+        foreach (ConnStation connStation in st.GetConnStationList())
         {
             // 현재역의 인접역이 닫힌목록에 있으면 True 없으면 False
             bool nowStationInClosedList = (closedList.Find(item => item.GetStationName().Equals(connStation.GetStationName())) != null);
@@ -127,9 +127,9 @@ public class AStar : MonoBehaviour
             // 닫힌목록에 있으면 무시
             if (nowStationInClosedList) continue;
             // 열린목록에 있으면 경로개선메소드 호출
-            else if (nowStationInOpenedList) CheckRouteImproveRequired(nowStation);
+            else if (nowStationInOpenedList) CheckRouteImproveRequired(st);
             // 열린목록에 없으면 열린목록에 추가하는 메소드 호출
-            else AddNowStationToOpenList(nowStation);
+            else AddNowStationToOpenList(st);
         }
     }
 
