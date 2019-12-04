@@ -6,14 +6,14 @@ public class Station
 {
     private string id;
     private string stationName;
-    private string parentId;
+    private string parentName;
     private Vector2 pos;
     private List<int> lines = new List<int>();
     private List<ConnStation> connStationList = new List<ConnStation>();
     private Dictionary<string, int> transferDic = new Dictionary<string, int>();
-    private float f;
-    private float g;
-    private float h;
+    private float f = 0;
+    private float g = 0;
+    private float h = 0;
 
     public void SetG(float g)
     {
@@ -55,14 +55,14 @@ public class Station
         return this.stationName;
     }
 
-    public void SetParentId(string parentId)
+    public void SetParentName(string parentId)
     {
-        this.parentId = parentId;
+        this.parentName = parentName;
     }
 
-    public string GetParentId()
+    public string GetParentName()
     {
-        return this.parentId;
+        return this.parentName;
     }
 
     public void SetPos(Vector2 pos)
