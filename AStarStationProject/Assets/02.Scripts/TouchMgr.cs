@@ -9,11 +9,9 @@ public class TouchMgr : MonoBehaviour
 
     private RaycastHit2D hit;
     private int stationLayer;
-    private Station nowStation;
-    private Station destination;
+    private string nowStation;
+    private string destination;
     private AStar aStar;
-
-    public StationData stationData;
 
     void Start()
     {
@@ -30,37 +28,35 @@ public class TouchMgr : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
             if (hit.collider != null)
             {
-                //Debug.Log(hit.collider.name);
-                // 디버그용 
-                Station station = stationData.GetStation(hit.collider.name);
-                Debug.Log(station.GetStationName() + " pos: " + station.GetPos());
-                //foreach(KeyValuePair<string, int> i in station.GetTransferDic())
-                //{
-                //    Debug.Log(i.Key + " : " + i.Value);
-                //}
-                // 디버그용 
+                TouchStation(hit.collider.name);
+                return;
             }
+            TouchOther();
         }
     }
 
-    private void TouchStation()
+    private void TouchStation(string name)
     {
         if (!startImg.activeSelf)
         {
             startImg.SetActive(true);
-            startImg.transform.position = Vector3.zero; // TODO: station 포지션으로
-            nowStation = new Station(); // TODO: station으로
+            startImg.transform.position = GetModifiedPos(name);
+            nowStation = name;
             return;
         }
         if (!endImg.activeSelf)
         {
+            if (name.Equals(nowStation))
+            {
+                TouchOther();
+                return;
+            }
             endImg.SetActive(true);
-            endImg.transform.position = Vector3.zero; // TODO: station 포지션으로
-            destination = new Station(); // TODO: station으로
-            aStar.StartCoroutine(aStar.SearchPath("nowStation", "destination"));
+            endImg.transform.position = GetModifiedPos(name);
+            destination = name;
+            aStar.StartCoroutine(aStar.SearchPath(nowStation, destination));
             return;
         }
         TouchOther();
@@ -81,5 +77,13 @@ public class TouchMgr : MonoBehaviour
         aStar.DestroyRings();
         destination = null;
         endImg.SetActive(false);
+    }
+
+    private Vector3 GetModifiedPos(string name)
+    {
+        Vector3 pos = GameObject.Find(name).transform.position;
+        pos.x += 0.2f;
+        pos.y += 0.4f;
+        return pos;
     }
 }

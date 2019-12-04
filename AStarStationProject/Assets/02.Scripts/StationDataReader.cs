@@ -4,16 +4,17 @@ using System.Collections.Generic;
 
 public class StationDataReader : MonoBehaviour
 {
-    Station station;
-    Vector2 pos;
-    ConnStation connStation;
-    public TouchMgr touchMgr;
+    private Station station;
+    private Vector2 pos;
+    private ConnStation connStation;
+    private StationData stationData;
 
     void Start()
     {
+        stationData = FindObjectOfType<StationData>();
         List<Dictionary<string, object>> csvData = CSVReader.Read("stationinfo");
         List<Dictionary<string, object>> csvConnDistenceDatas = CSVReader.Read("stationdistance");
-        touchMgr.stationData.stations = new List<Station>();
+        stationData.stations = new List<Station>();
 
         for (var i = 0; i < csvData.Count; i++)
         {
@@ -75,7 +76,7 @@ public class StationDataReader : MonoBehaviour
                 Debug.Log("ok error : splitChageDistence is null");
             }
 
-            touchMgr.stationData.stations.Add(station);
+            stationData.stations.Add(station);
         }
     }
 }

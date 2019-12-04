@@ -60,18 +60,37 @@ public class AStar : MonoBehaviour
         nowStation = stationData.GetStation(start);
         destination = stationData.GetStation(end);
         openedList.Add(nowStation);
-        LoopSearch();
-        List<Station> finalList = GetFinalRouteList();
-        // TODO: station리스트를 transform리스트로 변환해야함
-        // yeild return RouteAnim() coroutine
 
-        // TODO: RouteAnim 실행하기
+        // TODO: 이하, 테스트용.
+        yield return new WaitForSeconds(2.0f);
+        // List<Station> finalList = new List<Station>();
+        // finalList.Add(nowStation);
+        // finalList.Add(destination);
+        // routeList = ChangeStToTr(finalList);
+        // yield return StartCoroutine("RouteAnim");
+
+        // TODO: 이하, 메소드 작성 후 주석 풀기
+        // LoopSearch();
+        // List<Station> finalList = GetFinalRouteList();
+        // routeList = ChangeStToTr(finalList);
+        // TODO: 계산중임을 표시할 무언가 없애기
+        // yield return StartCoroutine("RouteAnim");
         yield return null;
+    }
+
+    private List<Transform> ChangeStToTr(List<Station> finalList)
+    {
+        List<Transform> trList = new List<Transform>();
+        foreach (Station st in finalList)
+        {
+            trList.Add(GameObject.Find(st.GetStationName()).transform);
+        }
+        return trList;
     }
 
     private void LoopSearch()
     {
-        float endTime = Time.time + 10;
+        float endTime = Time.time + 1;
         while (endTime < Time.time)
         {
             foreach (ConnStation cs in nowStation.GetConnStationList())
