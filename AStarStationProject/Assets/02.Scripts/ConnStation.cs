@@ -7,11 +7,6 @@ public class ConnStation
     private string stationName;
     private int dist;
 
-    void Start()
-    {
-        
-    }
-
     public void SetStationName(string stationName)
     {
         this.stationName = stationName;

@@ -9,9 +9,9 @@ public class AStar : MonoBehaviour
 
     private GameObject rings;
     private int nowLine;
-    private int G;
-    private int F;
-    private int H;
+    private float G;
+    private float F;
+    private float H;
     private List<Station> openedList = new List<Station>();
     private List<Station> closedList = new List<Station>();
     private Station nowStation;
