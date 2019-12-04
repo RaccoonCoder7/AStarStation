@@ -124,7 +124,7 @@ public class AStar : MonoBehaviour
             // 현재역의 인접역이 열린목록에 있으면 True 없으면 False
             bool nowStationInOpenedList = (openedList.Find(item => item.GetStationName().Equals(connStation.GetStationName())) != null);
             
-            // 
+            // 닫힌목록에 있으면 무시
             if (nowStationInClosedList) continue;
             // 열린목록에 있으면 경로개선메소드 호출
             else if (nowStationInOpenedList) CheckRouteImproveRequired(nowStation);
@@ -135,6 +135,7 @@ public class AStar : MonoBehaviour
 
     private void CheckRouteImproveRequired(Station st) // 경로개선 메소드
     {
+        FGHCalculation(st);
         float originalG = openedList.Find(item => item.GetStationName().Equals(st.GetStationName())).GetG();
         float nowG = st.GetG();
         // 기존 오픈리스트에 있던 station G값보다 현재 station G값이 작으면 기존 station 삭제, 현재 station 추가
