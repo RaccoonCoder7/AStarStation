@@ -6,15 +6,19 @@ public class TouchMgr : MonoBehaviour
 {
     public GameObject startImg;
     public GameObject endImg;
+    public bool canTouch = true;
 
     private RaycastHit2D hit;
     private int stationLayer;
     private string nowStation;
     private string destination;
     private AStar aStar;
+    private Vector3 originCamPos;
+    private Camera cam;
 
     void Start()
     {
+        cam = Camera.main;
         stationLayer = LayerMask.NameToLayer("Station");
         aStar = FindObjectOfType<AStar>();
         startImg = Instantiate(startImg);
@@ -25,8 +29,19 @@ public class TouchMgr : MonoBehaviour
 
     void Update()
     {
+        if (!canTouch) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            originCamPos = cam.transform.position;
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
+            if (!originCamPos.Equals(cam.transform.position))
+            {
+                return;
+            }
             hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit.collider != null)
             {
@@ -56,6 +71,7 @@ public class TouchMgr : MonoBehaviour
             endImg.SetActive(true);
             endImg.transform.position = GetModifiedPos(name);
             destination = name;
+            canTouch = false;
             aStar.StartCoroutine(aStar.SearchPath(nowStation, destination));
             return;
         }

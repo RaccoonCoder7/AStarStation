@@ -7,6 +7,7 @@ public class AStar : MonoBehaviour
 {
     public List<Transform> routeList = new List<Transform>();
     public GameObject ring;
+    public GameObject panel;
 
     private GameObject rings;
     private int nowLine;
@@ -18,6 +19,7 @@ public class AStar : MonoBehaviour
     private Station nowStation;
     private Station destination;
     private CameraMove camMove;
+    private TouchMgr touchMgr;
     private StationData stationData;
 
     void Start()
@@ -25,6 +27,7 @@ public class AStar : MonoBehaviour
         camMove = Camera.main.GetComponent<CameraMove>();
         rings = new GameObject("rings");
         stationData = FindObjectOfType<StationData>();
+        touchMgr = FindObjectOfType<TouchMgr>();
     }
 
     public void DestroyRings()
@@ -55,26 +58,29 @@ public class AStar : MonoBehaviour
 
     public IEnumerator SearchPath(string start, string end)
     {
-        // TODO: 계산중임을 표시할 무언가
+        panel.SetActive(true);
 
         nowStation = stationData.GetStation(start);
         destination = stationData.GetStation(end);
         openedList.Add(nowStation);
 
         // TODO: 이하, 테스트용.
-        yield return new WaitForSeconds(2.0f);
+        // yield return new WaitForSeconds(2.0f);
         // List<Station> finalList = new List<Station>();
         // finalList.Add(nowStation);
         // finalList.Add(destination);
         // routeList = ChangeStToTr(finalList);
+        // panel.SetActive(false);
         // yield return StartCoroutine("RouteAnim");
+        // touchMgr.canTouch = true;
 
         // TODO: 이하, 메소드 작성 후 주석 풀기
         // LoopSearch();
         // List<Station> finalList = GetFinalRouteList();
         // routeList = ChangeStToTr(finalList);
-        // TODO: 계산중임을 표시할 무언가 없애기
+        // panel.SetActive(false);
         // yield return StartCoroutine("RouteAnim");
+        // touchMgr.canTouch = true;
         yield return null;
     }
 
