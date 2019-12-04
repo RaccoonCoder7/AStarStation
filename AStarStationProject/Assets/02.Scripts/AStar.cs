@@ -59,7 +59,7 @@ public class AStar : MonoBehaviour
     public IEnumerator SearchPath(string start, string end)
     {
         panel.SetActive(true);
-
+        Debug.Log("0");
         nowStation = stationData.GetStation(start);
         destination = stationData.GetStation(end);
         openedList.Add(nowStation);
@@ -75,7 +75,17 @@ public class AStar : MonoBehaviour
         // touchMgr.canTouch = true;
 
         // TODO: 이하, 메소드 작성 후 주석 풀기
-        // LoopSearch();
+        Debug.Log("0.5");
+        LoopSearch();
+
+        // test
+        touchMgr.canTouch = true;
+        foreach (Station s in closedList)
+        {
+            Debug.Log(s.GetStationName());
+        }
+        panel.SetActive(false);
+        // test
         // List<Station> finalList = GetFinalRouteList();
         // routeList = ChangeStToTr(finalList);
         // panel.SetActive(false);
@@ -96,15 +106,21 @@ public class AStar : MonoBehaviour
 
     private void LoopSearch()
     {
-        float endTime = Time.time + 1;
-        while (endTime < Time.time)
+        float endTime = Time.time + 5;
+        Debug.Log("1");
+        while (endTime > Time.time)
         {
+            Debug.Log("2");
             foreach (ConnStation cs in nowStation.GetConnStationList())
             {
+                Debug.Log("3");
                 Station st = stationData.GetStation(cs.GetStationName());
+                Debug.Log("st: " + st);
                 SetStationLists(st);
                 if (st.GetStationName().Equals(destination.GetStationName()))
                 {
+                    Debug.Log("4");
+                    destination.SetParentName(nowStation.GetStationName());
                     return;
                 }
             }
@@ -122,30 +138,30 @@ public class AStar : MonoBehaviour
         // 클로즈리스트에 전에 오픈리스트에서 제거
         openedList.Remove(st);
         closedList.Add(st);
-        
-        foreach (ConnStation connStation in st.GetConnStationList())
-        {
-            // 현재역의 인접역이 닫힌목록에 있으면 True 없으면 False
-            bool nowStationInClosedList = (closedList.Find(item => item.GetStationName().Equals(connStation.GetStationName())) != null);
-            // 현재역의 인접역이 열린목록에 있으면 True 없으면 False
-            bool nowStationInOpenedList = (openedList.Find(item => item.GetStationName().Equals(connStation.GetStationName())) != null);
-            
-            // 닫힌목록에 있으면 무시
-            if (nowStationInClosedList) continue;
-            // 열린목록에 있으면 경로개선메소드 호출
-            else if (nowStationInOpenedList) CheckRouteImproveRequired(st);
-            // 열린목록에 없으면 열린목록에 추가하는 메소드 호출
-            else AddNowStationToOpenList(st);
-        }
+
+        // 현재역의 인접역이 닫힌목록에 있으면 True 없으면 False
+        bool nowStationInClosedList = (closedList.Find(item => item.GetStationName().Equals(st.GetStationName())) != null);
+        // 현재역의 인접역이 열린목록에 있으면 True 없으면 False
+        bool nowStationInOpenedList = (openedList.Find(item => item.GetStationName().Equals(st.GetStationName())) != null);
+
+        // 닫힌목록에 있으면 무시
+        if (nowStationInClosedList) return;
+        // 열린목록에 있으면 경로개선메소드 호출
+        else if (nowStationInOpenedList) CheckRouteImproveRequired(st);
+        // 열린목록에 없으면 열린목록에 추가하는 메소드 호출
+        else AddNowStationToOpenList(st);
+
     }
 
     private void CheckRouteImproveRequired(Station st) // 경로개선 메소드
     {
         FGHCalculation(st);
+        Debug.Log("find: " + openedList.Find(item => item.GetStationName().Equals(st.GetStationName())));
         float originalG = openedList.Find(item => item.GetStationName().Equals(st.GetStationName())).GetG();
         float nowG = st.GetG();
         // 기존 오픈리스트에 있던 station G값보다 현재 station G값이 작으면 기존 station 삭제, 현재 station 추가
-        if(originalG > nowG) {
+        if (originalG > nowG)
+        {
             openedList.Remove(stationData.GetStation(st.GetStationName()));
             openedList.Add(st);
         }
