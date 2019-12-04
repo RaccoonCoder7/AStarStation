@@ -38,6 +38,30 @@ public class AStar : MonoBehaviour
         yield return null;
     }
 
+    private void SetStationLists()
+    {
+
+    }
+
+    private void CheckRouteImproveRequired()
+    {
+
+    }
+
+    private void AddNowStationToOpenList()
+    {
+
+    }
+
+    private int GetNearestStation(){
+        int index = 0;
+        return index;
+    }
+
+    private List<Station> GetFinalRouteList(){
+        return null;
+    }
+
     private IEnumerator RouteAnim()
     {
         foreach (Transform item in routeList)
