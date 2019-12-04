@@ -177,18 +177,12 @@ public class AStar : MonoBehaviour
     private List<Station> GetFinalRouteList()
     {
         List<Station> finalList = new List<Station>();
+        finalList.Add(destination);
         Station nextStation = destination;
         while (!closedList[0].GetStationName().Equals(nextStation.GetStationName()))
         {
-            if (nextStation.GetStationName().Equals(destination.GetStationName()))
-            {
-                finalList.Add(destination);
-            }
-            else
-            {
-                finalList.Add(closedList.Find(item => item.GetStationName().Equals(nextStation.GetParentName())));
-            }
-            nextStation = finalList[finalList.Count - 1];
+            finalList.Add(closedList.Find(item => item.GetStationName().Equals(nextStation.GetParentName())));
+            nextStation = finalList[finalList.Count -1];
         }
 
         finalList.Add(nextStation);
