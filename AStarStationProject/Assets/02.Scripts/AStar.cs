@@ -218,7 +218,7 @@ public class AStar : MonoBehaviour
 
     private IEnumerator RouteAnim()
     {
-        for (int i = routeList.Count-1; i >= 0; i--)
+        for (int i = routeList.Count - 1; i >= 0; i--)
         {
             Vector3 pos = routeList[i].position;
             Instantiate(ring, pos, Quaternion.identity, rings.transform);
