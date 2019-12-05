@@ -55,7 +55,7 @@ public class Station
         return this.stationName;
     }
 
-    public void SetParentName(string parentId)
+    public void SetParentName(string parentName)
     {
         this.parentName = parentName;
     }

@@ -82,7 +82,7 @@ public class AStar : MonoBehaviour
         // TODO: 실제로는 필요한 코드. 아랫줄과 대체.
         // List<Station> finalList = GetFinalRouteList();
         List<Station> finalList = closedList;
-        routeList = ChangeStToTr(finalList);
+        routeList = ChangeStToTr(GetFinalRouteList());
         panel.SetActive(false);
         yield return StartCoroutine("RouteAnim");
         touchMgr.canTouch = true;
