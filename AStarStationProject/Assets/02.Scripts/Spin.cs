@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spin : MonoBehaviour
 {
-    void Start()
+    private void OnEnable()
     {
         StartCoroutine("SpinMark");
     }
