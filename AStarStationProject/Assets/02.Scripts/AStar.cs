@@ -57,10 +57,7 @@ public class AStar : MonoBehaviour
         st.SetH(H);
         st.SetF(F);
 
-        if (st.GetParentName().Equals(""))
-        {
-            st.SetParentName(nowStation.GetStationName());
-        }
+        st.SetParentName(nowStation.GetStationName());
     }
 
     public IEnumerator SearchPath(string start, string end)
