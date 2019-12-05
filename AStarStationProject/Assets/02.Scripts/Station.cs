@@ -6,7 +6,7 @@ public class Station
 {
     private string id;
     private string stationName;
-    private string parentName;
+    private string parentName = "";
     private Vector2 pos;
     private List<int> lines = new List<int>();
     private List<ConnStation> connStationList = new List<ConnStation>();

@@ -51,11 +51,16 @@ public class AStar : MonoBehaviour
         }
 
         H = Vector2.Distance(st.GetPos(), destination.GetPos());
+
         F = G + H;
         st.SetG(G);
         st.SetH(H);
         st.SetF(F);
-        st.SetParentName(nowStation.GetStationName());
+
+        if (st.GetParentName().Equals(""))
+        {
+            st.SetParentName(nowStation.GetStationName());
+        }
     }
 
     public IEnumerator SearchPath(string start, string end)
@@ -137,7 +142,19 @@ public class AStar : MonoBehaviour
         }
         if (!isEnd)
         {
-            nowStation = GetNearestStation();
+            Station nearestStation = GetNearestStation();
+
+            try
+            {
+                nowLine = Enumerable.Intersect(nowStation.GetLines(), nearestStation.GetLines()).First();
+            }
+            catch
+            {
+                Station parentStation = stationData.GetStation(nearestStation.GetParentName());
+                nowLine = Enumerable.Intersect(parentStation.GetLines(), nearestStation.GetLines()).First();
+            }
+
+            nowStation = nearestStation;
         }
         yield return null;
         isSearching = false;
