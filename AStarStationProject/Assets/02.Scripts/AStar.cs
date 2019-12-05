@@ -43,7 +43,7 @@ public class AStar : MonoBehaviour
         ConnStation connSt = nowStation.GetConnStationList().Find(item => item.GetStationName().Equals(st.GetStationName()));
         G = nowStation.GetG() + connSt.GetDist();
 
-        if (st.GetLines().Find(item => item.Equals(nowLine)).Equals(null))
+        if (st.GetLines().Find(item => item.Equals(nowLine)).Equals(0) && !nowLine.Equals(0))
         {
             int equalLine = Enumerable.Intersect(nowStation.GetLines(), st.GetLines()).First();
             string numToNum = equalLine > nowLine ? nowLine + "to" + equalLine : equalLine + "to" + nowLine;
