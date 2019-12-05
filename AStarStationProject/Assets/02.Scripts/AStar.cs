@@ -192,9 +192,9 @@ public class AStar : MonoBehaviour
 
     private IEnumerator RouteAnim()
     {
-        foreach (Transform item in routeList)
+        for (int i = routeList.Count-1; i >= 0; i--)
         {
-            Vector3 pos = item.position;
+            Vector3 pos = routeList[i].position;
             Instantiate(ring, pos, Quaternion.identity, rings.transform);
             pos.z = -10;
             pos = camMove.ChangeToMaxPos(pos);
