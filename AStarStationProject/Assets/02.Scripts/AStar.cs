@@ -23,7 +23,6 @@ public class AStar : MonoBehaviour
     private StationData stationData;
     private bool isEnd;
     private bool isSearching;
-    private IEnumerator coru;
 
     void Start()
     {
@@ -79,14 +78,26 @@ public class AStar : MonoBehaviour
             }
         }
 
-        // TODO: 실제로는 필요한 코드. 아랫줄과 대체.
-        // List<Station> finalList = GetFinalRouteList();
         List<Station> finalList = closedList;
         routeList = ChangeStToTr(GetFinalRouteList());
         panel.SetActive(false);
         yield return StartCoroutine("RouteAnim");
+        ResetApp();
         touchMgr.canTouch = true;
         yield return null;
+    }
+
+    private void ResetApp()
+    {
+        routeList = new List<Transform>();
+        nowLine = 0;
+        openedList = new List<Station>();
+        closedList = new List<Station>();
+        nowStation = null;
+        destination = null;
+        G = 0;
+        F = 0;
+        H = 0;
     }
 
     private List<Transform> ChangeStToTr(List<Station> finalList)
@@ -127,9 +138,9 @@ public class AStar : MonoBehaviour
         if (!isEnd)
         {
             nowStation = GetNearestStation();
-            isSearching = false;
-            yield return null;
         }
+        yield return null;
+        isSearching = false;
     }
 
     private void SetStationLists(Station st) // 탐색시작시 호출하는 메소드
@@ -182,7 +193,7 @@ public class AStar : MonoBehaviour
         while (!closedList[0].GetStationName().Equals(nextStation.GetStationName()))
         {
             finalList.Add(closedList.Find(item => item.GetStationName().Equals(nextStation.GetParentName())));
-            nextStation = finalList[finalList.Count -1];
+            nextStation = finalList[finalList.Count - 1];
         }
 
         finalList.Add(nextStation);
