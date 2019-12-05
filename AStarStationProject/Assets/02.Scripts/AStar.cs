@@ -143,16 +143,17 @@ public class AStar : MonoBehaviour
         if (!isEnd)
         {
             Station nearestStation = GetNearestStation();
-
-            try
+            Debug.Log("now: "+nowStation.GetStationName()+" nearest : " + nearestStation.GetParentName()+" nowline: "+nowLine);
+            if (nearestStation.GetParentName().Equals(nowStation.GetStationName()))
             {
                 nowLine = Enumerable.Intersect(nowStation.GetLines(), nearestStation.GetLines()).First();
             }
-            catch
+            else
             {
                 Station parentStation = stationData.GetStation(nearestStation.GetParentName());
                 nowLine = Enumerable.Intersect(parentStation.GetLines(), nearestStation.GetLines()).First();
             }
+            Debug.Log("nowLine: "+nowLine);
 
             nowStation = nearestStation;
         }
