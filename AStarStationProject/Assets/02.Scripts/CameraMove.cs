@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
 
-    public float dragSpeed = -500.0f;
+    public float dragSpeedX = -890.0f;
+    public float dragSpeedY = -550.0f;
     public float maxX = 5.92f;
     public float maxY = 3.73f;
 
@@ -36,7 +37,7 @@ public class CameraMove : MonoBehaviour
         if (!Input.GetMouseButton(0)) return;
 
         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - prevMousePos);
-        Vector3 move = new Vector3(pos.x * dragSpeed * Time.deltaTime, pos.y * dragSpeed * Time.deltaTime, 0);
+        Vector3 move = new Vector3(pos.x * dragSpeedX * Time.deltaTime, pos.y * dragSpeedY * Time.deltaTime, 0);
         move = CheckMaxPos(move);
 
         transform.Translate(move, Space.World);
