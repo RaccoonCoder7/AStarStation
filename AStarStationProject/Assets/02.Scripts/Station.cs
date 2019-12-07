@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 역의 세부정보가 저장될 클래스
 public class Station
 {
+    // 역의 id
     private string id;
+    // 역이름
     private string stationName;
+    // 부모역 이름
     private string parentName = "";
+    // 역 위치
     private Vector2 pos;
+    // 역이 가진 호선
     private List<int> lines = new List<int>();
+    // 역과 연결된 역정보
     private List<ConnStation> connStationList = new List<ConnStation>();
+    // 환승정보
     private Dictionary<string, int> transferDic = new Dictionary<string, int>();
+
+    // f,g,h 를 저장
     private float f = 0;
     private float g = 0;
     private float h = 0;

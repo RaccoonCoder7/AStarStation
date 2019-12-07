@@ -2,20 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// csv에서 데이터를 읽어와 원하는 형태로 저장하는 클래스
 public class StationDataReader : MonoBehaviour
 {
+    // 역정보 저장변수
     private Station station;
+    // 역 위치
     private Vector2 pos;
+    // 역과 연결된 역정보
     private ConnStation connStation;
+    // 역데이터를 저장할 변수
     private StationData stationData;
 
     void Start()
     {
         stationData = FindObjectOfType<StationData>();
+
+        // csv를 읽어옴
         List<Dictionary<string, object>> csvData = CSVReader.Read("stationinfo");
         List<Dictionary<string, object>> csvConnDistenceDatas = CSVReader.Read("stationdistance");
         stationData.stations = new List<Station>();
 
+        // csv의 내용을 원하는 형태로 변형
         for (var i = 0; i < csvData.Count; i++)
         {
             station = new Station();
@@ -76,6 +84,7 @@ public class StationDataReader : MonoBehaviour
                 Debug.Log("ok error : splitChageDistence is null");
             }
 
+            // 역 정보 리스트에 추가
             stationData.stations.Add(station);
         }
     }

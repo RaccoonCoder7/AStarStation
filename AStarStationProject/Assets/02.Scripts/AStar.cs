@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// A* 알고리즘을 이용해 최단경로를 구하는 클래스
 public class AStar : MonoBehaviour
 {
     public List<Transform> routeList = new List<Transform>();
@@ -38,11 +39,14 @@ public class AStar : MonoBehaviour
         rings = new GameObject("rings");
     }
 
+    // 각역의 F, G, H 값을 구하는 함수
     private void FGHCalculation(Station st)
     {
+        // 현재역과 인접역의 거리 + 지금까지 온 거리
         ConnStation connSt = nowStation.GetConnStationList().Find(item => item.GetStationName().Equals(st.GetStationName()));
         G = nowStation.GetG() + connSt.GetDist();
 
+        // 환승할경우 환승거리를 더해줌
         if (st.GetLines().Find(item => item.Equals(nowLine)).Equals(0) && !nowLine.Equals(0))
         {
             int equalLine = Enumerable.Intersect(nowStation.GetLines(), st.GetLines()).First();
@@ -50,6 +54,7 @@ public class AStar : MonoBehaviour
             G += nowStation.GetTransferDic()[numToNum];
         }
 
+        // 인접역과 목적지의 직선거리
         H = Vector2.Distance(st.GetPos(), destination.GetPos());
 
         F = G + H;
@@ -187,12 +192,14 @@ public class AStar : MonoBehaviour
         }
     }
 
+    // openList에 FGH를 계산하여 추가하는 메소드
     private void AddNowStationToOpenList(Station st)
     {
         FGHCalculation(st);
         openedList.Add(st);
     }
 
+    // openList중 가장 가까운 역의 정보를 반환하는 메소드
     private Station GetNearestStation()
     {
         float highestF = (from openData in openedList select openData.GetF()).Min();
@@ -200,17 +207,21 @@ public class AStar : MonoBehaviour
         return openedList.Find(item => item.GetF().Equals(highestF));
     }
 
+    // closeList에 저장된 역들을 목적지부터 부모 역을 따라 저장하여 최단루트 역리스트를 반환하는 메소드
     private List<Station> GetFinalRouteList()
     {
         List<Station> finalList = new List<Station>();
+        // 목적지 역 저장
         finalList.Add(destination);
         Station nextStation = destination;
+        // 출발역에 도달했을때 종료
         while (!closedList[0].GetStationName().Equals(nextStation.GetStationName()))
         {
             finalList.Add(closedList.Find(item => item.GetStationName().Equals(nextStation.GetParentName())));
             nextStation = finalList[finalList.Count - 1];
         }
 
+        // 출발역 저장
         finalList.Add(nextStation);
 
         return finalList;
