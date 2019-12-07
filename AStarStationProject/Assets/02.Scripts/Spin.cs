@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 탐색중에 표시하는 인디케이터의 애니메이션을 관리하는 클래스
 public class Spin : MonoBehaviour
 {
     private void OnEnable()

@@ -33,6 +33,7 @@ public class AStar : MonoBehaviour
         touchMgr = FindObjectOfType<TouchMgr>();
     }
 
+    // 화면상의 경로표시를 지우는 함수
     public void DestroyRings()
     {
         Destroy(rings);
@@ -65,6 +66,7 @@ public class AStar : MonoBehaviour
         st.SetParentName(nowStation.GetStationName());
     }
 
+    // 탐색 전, 필요한 값을 설정하고 경로탐색을 실행하는 함수.
     public IEnumerator SearchPath(string start, string end)
     {
         isEnd = false;
@@ -73,6 +75,7 @@ public class AStar : MonoBehaviour
         destination = stationData.GetStation(end);
         openedList.Add(nowStation);
 
+        // 경로탐색이 종료될 때 까지 반복
         while (!isEnd)
         {
             if (isSearching)
@@ -94,6 +97,7 @@ public class AStar : MonoBehaviour
         yield return null;
     }
 
+    // 경로탐색이 끝난 후 앱을 처음 상태로 되돌리는 함수
     private void ResetApp()
     {
         routeList = new List<Transform>();
@@ -107,6 +111,7 @@ public class AStar : MonoBehaviour
         H = 0;
     }
 
+    // 구한 경로를 화면에 보여주기 위해 약도상의 위치를 얻는 함수
     private List<Transform> ChangeStToTr(List<Station> finalList)
     {
         List<Transform> trList = new List<Transform>();
@@ -117,6 +122,7 @@ public class AStar : MonoBehaviour
         return trList;
     }
 
+    // 현재역 기준으로 주변 역들을 탐색하는 함수
     private IEnumerator LoopSearch()
     {
         isSearching = true;
@@ -124,10 +130,14 @@ public class AStar : MonoBehaviour
         // 클로즈리스트에 전에 오픈리스트에서 제거
         closedList.Add(nowStation);
         openedList.Remove(nowStation);
+
+        // 주변 역 수 만큼 반복
         foreach (ConnStation cs in nowStation.GetConnStationList())
         {
             Station st = stationData.GetStation(cs.GetStationName());
             SetStationLists(st);
+
+            // 목적지를 찾았을 경우, 탐색을 종료
             if (st.GetStationName().Equals(destination.GetStationName()))
             {
                 destination.SetParentName(nowStation.GetStationName());
@@ -136,6 +146,8 @@ public class AStar : MonoBehaviour
                 break;
             }
         }
+
+        // 목적지를 찾지 못했을 경우, 탐색을 종료
         if (openedList.Count == 0)
         {
             destination.SetParentName(nowStation.GetStationName());
@@ -163,7 +175,8 @@ public class AStar : MonoBehaviour
         isSearching = false;
     }
 
-    private void SetStationLists(Station st) // 탐색시작시 호출하는 메소드
+    // 현재역 기준으로 인접한 역들을 알맞은 목록에 넣는 함수
+    private void SetStationLists(Station st) 
     {
         // 현재역의 인접역이 닫힌목록에 있으면 True 없으면 False
         bool nowStationInClosedList = (closedList.Find(item => item.GetStationName().Equals(st.GetStationName())) != null);
@@ -178,7 +191,8 @@ public class AStar : MonoBehaviour
         else AddNowStationToOpenList(st);
     }
 
-    private void CheckRouteImproveRequired(Station st) // 경로개선 메소드
+    // 이미 열린목록에 있던 역의 경로를 개선하는 함수
+    private void CheckRouteImproveRequired(Station st) 
     {
         FGHCalculation(st);
         // Debug.Log("find: " + openedList.Find(item => item.GetStationName().Equals(st.GetStationName())));
@@ -192,14 +206,14 @@ public class AStar : MonoBehaviour
         }
     }
 
-    // openList에 FGH를 계산하여 추가하는 메소드
+    // 인접역의 FGH를 계산하여 열린목록에 추가하는 함수
     private void AddNowStationToOpenList(Station st)
     {
         FGHCalculation(st);
         openedList.Add(st);
     }
 
-    // openList중 가장 가까운 역의 정보를 반환하는 메소드
+    // 열린목록을 탐색하여 가장 가까운 역을 반환하는 함수
     private Station GetNearestStation()
     {
         float highestF = (from openData in openedList select openData.GetF()).Min();
@@ -207,7 +221,7 @@ public class AStar : MonoBehaviour
         return openedList.Find(item => item.GetF().Equals(highestF));
     }
 
-    // closeList에 저장된 역들을 목적지부터 부모 역을 따라 저장하여 최단루트 역리스트를 반환하는 메소드
+    // 최단경로 역리스트를 반환하는 함수
     private List<Station> GetFinalRouteList()
     {
         List<Station> finalList = new List<Station>();
@@ -227,6 +241,7 @@ public class AStar : MonoBehaviour
         return finalList;
     }
 
+    // 최단경로를 화면상에 애니메이션으로 표시하는 함수
     private IEnumerator RouteAnim()
     {
         for (int i = routeList.Count - 1; i >= 0; i--)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 사용자의 조작을 읽어 그 처리를 수행하는 클래스
 public class TouchMgr : MonoBehaviour
 {
     public GameObject startImg;
@@ -52,6 +53,7 @@ public class TouchMgr : MonoBehaviour
         }
     }
 
+    // 역을 클릭하였을 경우를 처리하는 함수
     private void TouchStation(string name)
     {
         if (!startImg.activeSelf)
@@ -78,6 +80,7 @@ public class TouchMgr : MonoBehaviour
         TouchOther();
     }
 
+    // 역 이외의 곳을 클릭하였을 경우를 처리하는 함수
     private void TouchOther()
     {
         if (!startImg.activeSelf)
@@ -95,6 +98,7 @@ public class TouchMgr : MonoBehaviour
         endImg.SetActive(false);
     }
 
+    // 화면 비율에 따른 화면제한범위를 반환하는 함수
     private Vector3 GetModifiedPos(string name)
     {
         Vector3 pos = GameObject.Find(name).transform.position;
